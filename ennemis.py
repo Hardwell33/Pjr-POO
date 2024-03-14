@@ -169,7 +169,7 @@ class TESTE(Character):
         super().__init__(name, hp, attack_value, defense_value, dice)
 
 
-ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls]
+ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, Trolls]
 
 #char1 = TESTE()
 #char2 = Roi_Gobelin()
