@@ -1,10 +1,4 @@
 from dice import Dice
-from rich import print
-
-# SOLID
-# S
-# D
-
 
 class Character:
     def __init__(self, name, hp_max, attack_value, defense_value, dice) -> None:
@@ -51,7 +45,7 @@ class Character:
             target.defense(damages, self)
 
     def compute_raw_damages(self, damages, roll, attacker):
-        return damages - self.defense_value - roll
+        return max(0, damages - self.defense_value - roll)
 
     def defense(self, damages, attacker):
         roll = self.dice.roll()
@@ -78,11 +72,32 @@ class Thief(Character):
     def compute_damages(self, roll, target):
         print(f"🔪 Sneacky attack ! (+{target.defense_value} dmg)")
         return super().compute_damages(roll, target) + target.defense_value
+    
+class Archer(Character):
+    def compute_damages(self, roll, target):
+        print("🏹 Arrow hit you ! (+5dmg)")
+        return super().compute_damages(roll,target) +5
 
 
-char1 = Warrior("James", 20, 8, 4, Dice("red", 6))
-char2 = Thief("Lisa", 20, 8, 3, Dice("blue", 6))
+class Druid(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, mana_max, healing_value):
+        super().__init__(name, hp_max, attack_value, defense_value, dice)
+        self.mana_max = mana_max
+        self.mana = mana_max
+        self.healing_value = healing_value
 
-while char1.is_alive() and char2.is_alive():
-    char1.attack(char2)
-    char2.attack(char1)
+    def has_enough_mana(self, mana_cost):
+        return self.mana >= mana_cost
+
+    def heal(self, target):
+        if self.is_alive():
+            if isinstance(self.healing_value, int) and self.has_enough_mana(5):
+                roll = self.dice.roll()
+                healing = self.healing_value + roll
+                self.mana -= 5
+                print(f"{self.name} [green]heals[green] {target.name} with {healing} pv")
+                target.increase_hp(healing)
+            else:
+                print(f"{self.name} doesn't have enough mana to cast a spell.")
+        else:
+            print(f"{self.name} is not alive.")
