@@ -1,9 +1,4 @@
 from dice import Dice
-from rich import print
-
-# SOLID
-# S
-# D
 
 
 class Character:
@@ -35,7 +30,7 @@ class Character:
 
     def show_healthbar(self):
         print(
-            f"[{'♥' * self.hp}{'♡' * (self.hp_max - self.hp)}] {self.hp}/{self.hp_max}hp"
+            f"[{'°' * self.hp}{'O' * (self.hp_max - self.hp)}] {self.hp}/{self.hp_max}hp"
         )
 
     def compute_damages(self, roll, target):
@@ -80,9 +75,18 @@ class Thief(Character):
         return super().compute_damages(roll, target) + target.defense_value
 
 
-char1 = Warrior("James", 20, 8, 4, Dice("red", 6))
-char2 = Thief("Lisa", 20, 8, 3, Dice("blue", 6))
+class Archer(Character):
+    def compute_damages(self, roll, target):
+        print("Arrow hit you ! (+5dmg)")
+        return super().compute_damages(roll,target) +5
 
-while char1.is_alive() and char2.is_alive():
-    char1.attack(char2)
-    char2.attack(char1)
+class Druid(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, healing_value):
+        super().__init__(name, hp_max, attack_value, defense_value, dice)
+        self.healing_value = healing_value
+    def heal(self,target):
+        if self.is_alive():
+            roll=self.dice.roll()
+            healing=self.healing_value + roll
+            print(f"{self.name} [vert]guérit[vert] {target.name} de {healing} point de vie")
+            target.increase_hp(healing)
