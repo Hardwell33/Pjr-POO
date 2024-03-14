@@ -1,6 +1,6 @@
 import sys
 import character 
-from dice import Dice_spawn 
+
 
 def show_main_menu():
     print("Bienvenue dans le jeu !")
