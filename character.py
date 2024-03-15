@@ -1,5 +1,6 @@
 from dice import Dice
 
+
 class Character:
     def __init__(self, name, hp_max, attack_value, defense_value, dice) -> None:
         self.name = name
@@ -85,6 +86,7 @@ class Druid(Character):
         self.mana_max = mana_max
         self.mana = dice.roll()
         self.healing_value = healing_value
+<<<<<<< Updated upstream
         self.allies = []
 
     def heal_ally(self, target):
@@ -102,3 +104,22 @@ class Druid(Character):
             print(f"{self.name} [vert]lance un sort[/vert] sur {target.name} (mana: {self.mana}/{self.mana_max})")
         elif target in self.allies:
             print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
+=======
+        self.allies = [Archer, Druid, Thief, Warrior, Mage]
+
+    def attack(self, target):
+        if self.mana >= self.healing_value and target not in self.allies:
+            self.mana -= self.healing_value
+            target.decrease_hp(self.healing_value)
+            print(f"{self.name} [vert]soigne[/vert] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
+        else:
+            super().attack(target)
+
+    def heal(self, target):
+        if target in self.allies:
+            target.increase_hp(self.healing_value)
+            self.mana -= self.healing_value
+            print(f"{self.name} [vert]soigne[/vert] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
+        else:
+            super().attack(target)
+>>>>>>> Stashed changes

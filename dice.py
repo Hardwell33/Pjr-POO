@@ -23,6 +23,8 @@ class Dice:
 class RiggedDice(Dice):
     def roll(self):
         return self.faces
+    
+
 
 
 # a_dice = Dice("blue", 6)

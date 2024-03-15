@@ -7,6 +7,7 @@ import dice
 # Créer une instance de dé
 dice = dice.Dice(color="black", faces=6)
 
+
 # Appeler la fonction main depuis le fichier menu.py et passer en argument la variable player
 #menu.main(player)
 
